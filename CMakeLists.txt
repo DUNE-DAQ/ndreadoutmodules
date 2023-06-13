@@ -18,6 +18,7 @@ daq_setup_environment()
 find_package(appfwk REQUIRED)
 find_package(opmonlib REQUIRED)
 find_package(readoutmodules REQUIRED)
+find_package(ndreadoutlibs REQUIRED)
 find_package(Boost COMPONENTS unit_test_framework REQUIRED)
 
 ##############################################################################
