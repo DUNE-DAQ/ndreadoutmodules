@@ -70,7 +70,7 @@ NDDataLinkHandler::get_info(opmonlib::InfoCollector& ci, int level)
 }
 
 std::unique_ptr<readoutlibs::ReadoutConcept>
-NDDataLinkHandlercreate_readout(const nlohmann::json& args, std::atomic<bool>& run_marker)
+NDDataLinkHandler::create_readout(const nlohmann::json& args, std::atomic<bool>& run_marker)
 {
   namespace rol = dunedaq::readoutlibs;
   namespace ndt = dunedaq::ndreadoutlibs::types;

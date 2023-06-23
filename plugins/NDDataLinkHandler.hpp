@@ -18,7 +18,7 @@ namespace dunedaq {
 namespace ndreadoutmodules {
 
 class NDDataLinkHandler : public dunedaq::appfwk::DAQModule,
-                          private dunedaq::readoutmodules::DataLinkHandlerBase
+                          public dunedaq::readoutmodules::DataLinkHandlerBase
 {
 public:
   using inherited_dlh = dunedaq::readoutmodules::DataLinkHandlerBase;
