@@ -22,10 +22,13 @@
 
 #include "ndreadoutlibs/NDReadoutPACMANTypeAdapter.hpp"
 #include "ndreadoutlibs/NDReadoutMPDTypeAdapter.hpp"
+#include "ndreadoutlibs/NDReadoutPATTypeAdapter.hpp"
 #include "ndreadoutlibs/pacman/PACMANFrameProcessor.hpp"
 #include "ndreadoutlibs/pacman/PACMANListRequestHandler.hpp"
 #include "ndreadoutlibs/mpd/MPDFrameProcessor.hpp"
 #include "ndreadoutlibs/mpd/MPDListRequestHandler.hpp"
+#include "ndreadoutlibs/pat/PATFrameProcessor.hpp"
+#include "ndreadoutlibs/pat/PATListRequestHandler.hpp"
 
 #include <memory>
 #include <sstream>
@@ -37,7 +40,8 @@ using namespace dunedaq::readoutlibs::logging;
 namespace dunedaq {
 
 DUNE_DAQ_TYPESTRING(dunedaq::ndreadoutlibs::types::NDReadoutPACMANTypeAdapter, "PACMANFrame")
-DUNE_DAQ_TYPESTRING(dunedaq::ndreadoutlibs::types::NDReadoutMPDTypeAdapter, "MPDFrame")
+DUNE_DAQ_TYPESTRING(dunedaq::ndreadoutlibs::types::NDReadoutMPDTypeAdapter   , "MPDFrame"   )
+DUNE_DAQ_TYPESTRING(dunedaq::ndreadoutlibs::types::NDReadoutPATTypeAdapter   , "PATFrame"   )
 
 namespace ndreadoutmodules {
 
@@ -109,6 +113,15 @@ NDDataLinkHandler::create_readout(const nlohmann::json& args, std::atomic<bool>&
     readout_model->init(args);
     return readout_model;
   }
+
+  // IF ND GAr
+  if (raw_dt.find("PATFrame") != std::string::npos)
+    {
+      TLOG_DEBUG(TLVL_WORK_STEPS) << "Creating readout for pat";
+      auto readout_model = std::make_unique<rol::ReadoutModel<ndt::NDReadoutPATTypeAdapter, ndreadoutlibs::PATListRequestHandler, rol::SkipListLatencyBufferModel<ndt::NDReadoutPATTypeAdapter>, ndreadoutlibs::PATFrameProcessor>>(run_marker);
+      readout_model->init(args);
+      return readout_model;
+    }
 
   return nullptr;
 }
