@@ -14,10 +14,10 @@
 
 #include "iomanager/IOManager.hpp"
 
-#include "ndreadoutlibs/ReadoutIssues.hpp"
+#include "datahandlinglibs/DataHandlingIssues.hpp"
 #include "datahandlinglibs/ReadoutLogging.hpp"
-#include "datahandlinglibs/concepts/ReadoutConcept.hpp"
-#include "datahandlinglibs/models/ReadoutModel.hpp"
+#include "datahandlinglibs/concepts/DataHandlingConcept.hpp"
+#include "datahandlinglibs/models/DataHandlingModel.hpp"
 #include "datahandlinglibs/models/SkipListLatencyBufferModel.hpp"
 
 #include "ndreadoutlibs/NDReadoutPACMANTypeAdapter.hpp"
@@ -43,7 +43,7 @@ namespace ndreadoutmodules {
 
 NDDataHandlerModule::NDDataHandlerModule(const std::string& name)
   : DAQModule(name)
-  , DataLinkHandlerBase(name)
+  , RawDataHandlerBase(name)
 { 
   //inherited_dlh::m_readout_creator = make_readout_creator("nd");
 
@@ -55,11 +55,11 @@ NDDataHandlerModule::NDDataHandlerModule(const std::string& name)
 }
 
 void
-NDDataHandlerModule::init(const data_t& args)
+NDDataHandlerModule::init(std::shared_ptr<appfwk::ModuleConfiguration> cfg)
 {
 
   TLOG_DEBUG(TLVL_ENTER_EXIT_METHODS) << get_name() << ": Entering init() method";
-  inherited_dlh::init(args);
+  inherited_dlh::init(cfg);
   TLOG_DEBUG(TLVL_ENTER_EXIT_METHODS) << get_name() << ": Exiting init() method";
 }
 
@@ -69,28 +69,20 @@ NDDataHandlerModule::get_info(opmonlib::InfoCollector& ci, int level)
   inherited_dlh::get_info(ci, level);
 }
 
-std::unique_ptr<datahandlinglibs::ReadoutConcept>
+std::unique_ptr<datahandlinglibs::DataHandlingConcept>
 NDDataHandlerModule::create_readout(const appmodel::DataHandlerModule* modconf, std::atomic<bool>& run_marker)
 {
   namespace rol = dunedaq::datahandlinglibs;
   namespace ndt = dunedaq::ndreadoutlibs::types;
 
   // Acquire input connection and its DataType
-  auto ci = appfwk::connection_index(args, {"raw_input"});
-  auto datatypes = dunedaq::iomanager::IOManager::get()->get_datatypes(ci["raw_input"]);
-  if (datatypes.size() != 1) {
-    ers::error(dunedaq::datahandlinglibs::GenericConfigurationError(ERS_HERE,
-      "Multiple raw_input queues specified! Expected only a single instance!"));
-  }
-  std::string raw_dt{ *datatypes.begin() };
-  TLOG() << "Choosing specializations for ReadoutModel with raw_input"
-         << " [uid:" << ci["raw_input"] << " , data_type:" << raw_dt << ']';
 
+ std::string raw_dt = modconf->get_module_configuration()->get_input_data_type();
   // IF ND LAr PACMAN
   if (raw_dt.find("PACMANFrame") != std::string::npos) {
     TLOG_DEBUG(TLVL_WORK_STEPS) << "Creating readout for a pacman";
     auto readout_model =
-      std::make_unique<rol::ReadoutModel<ndt::NDReadoutPACMANTypeAdapter,
+      std::make_unique<rol::DataHandlingModel<ndt::NDReadoutPACMANTypeAdapter,
                                          ndreadoutlibs::PACMANListRequestHandler,
                                          rol::SkipListLatencyBufferModel<ndt::NDReadoutPACMANTypeAdapter>,
                                          ndreadoutlibs::PACMANFrameProcessor>>(run_marker);
@@ -102,7 +94,7 @@ NDDataHandlerModule::create_readout(const appmodel::DataHandlerModule* modconf, 
   if (raw_dt.find("MPDFrame") != std::string::npos) {
     TLOG_DEBUG(TLVL_WORK_STEPS) << "Creating readout for a mpd";
     auto readout_model =
-    std::make_unique<rol::ReadoutModel<ndt::NDReadoutMPDTypeAdapter,
+    std::make_unique<rol::DataHandlingModel<ndt::NDReadoutMPDTypeAdapter,
                                        ndreadoutlibs::MPDListRequestHandler,
                                        rol::SkipListLatencyBufferModel<ndt::NDReadoutMPDTypeAdapter>,
                                        ndreadoutlibs::MPDFrameProcessor>>(run_marker);

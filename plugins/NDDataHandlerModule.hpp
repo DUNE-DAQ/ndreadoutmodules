@@ -18,10 +18,10 @@ namespace dunedaq {
 namespace ndreadoutmodules {
 
 class NDDataHandlerModule : public dunedaq::appfwk::DAQModule,
-                          public dunedaq::readoutmodules::RawDataHandlerBase
+                          public dunedaq::datahandlinglibs::RawDataHandlerBase
 {
 public:
-  using inherited_dlh = dunedaq::readoutmodules::RawDataHandlerBase;
+  using inherited_dlh = dunedaq::datahandlinglibs::RawDataHandlerBase;
   using inherited_mod = dunedaq::appfwk::DAQModule;
   /**
    * @brief NDDataHandlerModule Constructor
@@ -37,7 +37,7 @@ public:
   void init(std::shared_ptr<appfwk::ModuleConfiguration> cfg) override;
   void get_info(opmonlib::InfoCollector& ci, int level) override;
 
-  std::unique_ptr<readoutlibs::ReadoutConcept>
+  std::unique_ptr<datahandlinglibs::DataHandlingConcept>
   create_readout(const appmodel::DataHandlerModule* modconf, std::atomic<bool>& run_marker) override;
 
 };

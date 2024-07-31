@@ -7,7 +7,8 @@ include(CMakeFindDependencyMacro)
 # the place of this comment. Make sure they match up with the
 # find_package calls in your package's CMakeLists.txt file
 find_dependency(ndreadoutlibs)
-find_dependency(readoutmodules)
+find_dependency(datahandlinglibs)
+find_dependency(appmodel)
 find_dependency(opmonlib)
 find_dependency(appfwk)
 find_dependency(Boost)
