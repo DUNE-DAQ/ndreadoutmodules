@@ -14,11 +14,11 @@
 
 #include "iomanager/IOManager.hpp"
 
-#include "readoutlibs/ReadoutIssues.hpp"
-#include "readoutlibs/ReadoutLogging.hpp"
-#include "readoutlibs/concepts/ReadoutConcept.hpp"
-#include "readoutlibs/models/ReadoutModel.hpp"
-#include "readoutlibs/models/SkipListLatencyBufferModel.hpp"
+#include "ndreadoutlibs/ReadoutIssues.hpp"
+#include "datahandlinglibs/ReadoutLogging.hpp"
+#include "datahandlinglibs/concepts/ReadoutConcept.hpp"
+#include "datahandlinglibs/models/ReadoutModel.hpp"
+#include "datahandlinglibs/models/SkipListLatencyBufferModel.hpp"
 
 #include "ndreadoutlibs/NDReadoutPACMANTypeAdapter.hpp"
 #include "ndreadoutlibs/NDReadoutMPDTypeAdapter.hpp"
@@ -32,7 +32,7 @@
 #include <string>
 #include <vector>
 
-using namespace dunedaq::readoutlibs::logging;
+using namespace dunedaq::datahandlinglibs::logging;
 
 namespace dunedaq {
 
@@ -69,17 +69,17 @@ NDDataHandlerModule::get_info(opmonlib::InfoCollector& ci, int level)
   inherited_dlh::get_info(ci, level);
 }
 
-std::unique_ptr<readoutlibs::ReadoutConcept>
+std::unique_ptr<datahandlinglibs::ReadoutConcept>
 NDDataHandlerModule::create_readout(const appmodel::DataHandlerModule* modconf, std::atomic<bool>& run_marker)
 {
-  namespace rol = dunedaq::readoutlibs;
+  namespace rol = dunedaq::datahandlinglibs;
   namespace ndt = dunedaq::ndreadoutlibs::types;
 
   // Acquire input connection and its DataType
   auto ci = appfwk::connection_index(args, {"raw_input"});
   auto datatypes = dunedaq::iomanager::IOManager::get()->get_datatypes(ci["raw_input"]);
   if (datatypes.size() != 1) {
-    ers::error(dunedaq::readoutlibs::GenericConfigurationError(ERS_HERE,
+    ers::error(dunedaq::datahandlinglibs::GenericConfigurationError(ERS_HERE,
       "Multiple raw_input queues specified! Expected only a single instance!"));
   }
   std::string raw_dt{ *datatypes.begin() };
