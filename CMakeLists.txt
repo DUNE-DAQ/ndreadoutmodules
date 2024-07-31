@@ -50,7 +50,7 @@ daq_add_python_bindings(*.cpp LINK_LIBRARIES ${PROJECT_NAME} ) # Any additional 
 
 # See https://dune-daq-sw.readthedocs.io/en/latest/packages/daq-cmake/#daq_add_plugin
 
-daq_add_plugin(NDDataLinkHandler duneDAQModule LINK_LIBRARIES appfwk::appfwk readoutmodules::readoutmodules ndreadoutlibs::ndreadoutlibs Boost::iostreams) # Replace appfwk library with a more specific library when appropriate
+daq_add_plugin(NDDataHandlerModule duneDAQModule LINK_LIBRARIES appfwk::appfwk readoutmodules::readoutmodules ndreadoutlibs::ndreadoutlibs Boost::iostreams) # Replace appfwk library with a more specific library when appropriate
 
 ##############################################################################
 
