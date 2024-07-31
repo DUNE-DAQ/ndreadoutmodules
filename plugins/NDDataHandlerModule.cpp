@@ -5,7 +5,7 @@
  * Licensing/copyright details are in the COPYING file that you should have
  * received with this code.
  */
-#include "NDDataLinkHandler.hpp"
+#include "NDDataHandlerModule.hpp"
 
 #include "appfwk/app/Nljs.hpp"
 #include "appfwk/cmd/Nljs.hpp"
