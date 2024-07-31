@@ -10,35 +10,35 @@
 
 #include "appfwk/DAQModule.hpp"
 
-#include "readoutmodules/DataLinkHandlerBase.hpp"
+#include "datahandlinglibs/RawDataHandlerBase.hpp"
 
 #include <string>
 
 namespace dunedaq {
 namespace ndreadoutmodules {
 
-class NDDataLinkHandler : public dunedaq::appfwk::DAQModule,
-                          public dunedaq::readoutmodules::DataLinkHandlerBase
+class NDDataHandlerModule : public dunedaq::appfwk::DAQModule,
+                          public dunedaq::readoutmodules::RawDataHandlerBase
 {
 public:
-  using inherited_dlh = dunedaq::readoutmodules::DataLinkHandlerBase;
+  using inherited_dlh = dunedaq::readoutmodules::RawDataHandlerBase;
   using inherited_mod = dunedaq::appfwk::DAQModule;
   /**
-   * @brief NDDataLinkHandler Constructor
-   * @param name Instance name for this NDDataLinkHandler instance
+   * @brief NDDataHandlerModule Constructor
+   * @param name Instance name for this NDDataHandlerModule instance
    */
-  explicit NDDataLinkHandler(const std::string& name);
+  explicit NDDataHandlerModule(const std::string& name);
 
-  NDDataLinkHandler(const NDDataLinkHandler&) = delete;            ///< NDDataLinkHandler is not copy-constructible
-  NDDataLinkHandler& operator=(const NDDataLinkHandler&) = delete; ///< NDDataLinkHandler is not copy-assignable
-  NDDataLinkHandler(NDDataLinkHandler&&) = delete;                 ///< NDDataLinkHandler is not move-constructible
-  NDDataLinkHandler& operator=(NDDataLinkHandler&&) = delete;      ///< NDDataLinkHandler is not move-assignable
+  NDDataHandlerModule(const NDDataHandlerModule&) = delete;            ///< NDDataHandlerModule is not copy-constructible
+  NDDataHandlerModule& operator=(const NDDataHandlerModule&) = delete; ///< NDDataHandlerModule is not copy-assignable
+  NDDataHandlerModule(NDDataHandlerModule&&) = delete;                 ///< NDDataHandlerModule is not move-constructible
+  NDDataHandlerModule& operator=(NDDataHandlerModule&&) = delete;      ///< NDDataHandlerModule is not move-assignable
 
-  void init(const data_t& args) override;
+  void init(std::shared_ptr<appfwk::ModuleConfiguration> cfg) override;
   void get_info(opmonlib::InfoCollector& ci, int level) override;
 
   std::unique_ptr<readoutlibs::ReadoutConcept>
-  create_readout(const nlohmann::json& args, std::atomic<bool>& run_marker) override;
+  create_readout(const appmodel::DataHandlerModule* modconf, std::atomic<bool>& run_marker) override;
 
 };
 

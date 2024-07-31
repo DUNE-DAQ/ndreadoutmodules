@@ -41,7 +41,7 @@ DUNE_DAQ_TYPESTRING(dunedaq::ndreadoutlibs::types::NDReadoutMPDTypeAdapter, "MPD
 
 namespace ndreadoutmodules {
 
-NDDataLinkHandler::NDDataLinkHandler(const std::string& name)
+NDDataHandlerModule::NDDataHandlerModule(const std::string& name)
   : DAQModule(name)
   , DataLinkHandlerBase(name)
 { 
@@ -55,7 +55,7 @@ NDDataLinkHandler::NDDataLinkHandler(const std::string& name)
 }
 
 void
-NDDataLinkHandler::init(const data_t& args)
+NDDataHandlerModule::init(const data_t& args)
 {
 
   TLOG_DEBUG(TLVL_ENTER_EXIT_METHODS) << get_name() << ": Entering init() method";
@@ -64,13 +64,13 @@ NDDataLinkHandler::init(const data_t& args)
 }
 
 void
-NDDataLinkHandler::get_info(opmonlib::InfoCollector& ci, int level)
+NDDataHandlerModule::get_info(opmonlib::InfoCollector& ci, int level)
 {
   inherited_dlh::get_info(ci, level);
 }
 
 std::unique_ptr<readoutlibs::ReadoutConcept>
-NDDataLinkHandler::create_readout(const nlohmann::json& args, std::atomic<bool>& run_marker)
+NDDataHandlerModule::create_readout(const appmodel::DataHandlerModule* modconf, std::atomic<bool>& run_marker)
 {
   namespace rol = dunedaq::readoutlibs;
   namespace ndt = dunedaq::ndreadoutlibs::types;
@@ -94,7 +94,7 @@ NDDataLinkHandler::create_readout(const nlohmann::json& args, std::atomic<bool>&
                                          ndreadoutlibs::PACMANListRequestHandler,
                                          rol::SkipListLatencyBufferModel<ndt::NDReadoutPACMANTypeAdapter>,
                                          ndreadoutlibs::PACMANFrameProcessor>>(run_marker);
-    readout_model->init(args);
+    readout_model->init(modconf);
     return readout_model;
   }
 
@@ -106,7 +106,7 @@ NDDataLinkHandler::create_readout(const nlohmann::json& args, std::atomic<bool>&
                                        ndreadoutlibs::MPDListRequestHandler,
                                        rol::SkipListLatencyBufferModel<ndt::NDReadoutMPDTypeAdapter>,
                                        ndreadoutlibs::MPDFrameProcessor>>(run_marker);
-    readout_model->init(args);
+    readout_model->init(modconf);
     return readout_model;
   }
 
@@ -116,4 +116,4 @@ NDDataLinkHandler::create_readout(const nlohmann::json& args, std::atomic<bool>&
 } // namespace ndreadoutmodules
 } // namespace dunedaq
 
-DEFINE_DUNE_DAQ_MODULE(dunedaq::ndreadoutmodules::NDDataLinkHandler)
+DEFINE_DUNE_DAQ_MODULE(dunedaq::ndreadoutmodules::NDDataHandlerModule)
