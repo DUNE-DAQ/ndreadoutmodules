@@ -35,10 +35,12 @@ public:
   NDDataHandlerModule& operator=(NDDataHandlerModule&&) = delete;      ///< NDDataHandlerModule is not move-assignable
 
   void init(std::shared_ptr<appfwk::ModuleConfiguration> cfg) override;
-  void get_info(opmonlib::InfoCollector& ci, int level) override;
 
   std::unique_ptr<datahandlinglibs::DataHandlingConcept>
   create_readout(const appmodel::DataHandlerModule* modconf, std::atomic<bool>& run_marker) override;
+
+protected:
+ void generate_opmon_data() override;
 
 };
 

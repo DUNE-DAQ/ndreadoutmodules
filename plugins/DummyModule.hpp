@@ -26,19 +26,19 @@ public:
 
   void init(const data_t&) override;
 
-  void get_info(opmonlib::InfoCollector&, int /*level*/) override;
-
   DummyModule(const DummyModule&) = delete;
   DummyModule& operator=(const DummyModule&) = delete;
   DummyModule(DummyModule&&) = delete;
   DummyModule& operator=(DummyModule&&) = delete;
 
   ~DummyModule() = default;
+protected:
+  void generate_opmon_data() override;
 
 private:
   // Commands DummyModule can receive
 
-  // TO ndreadoutmodules DEVELOPERS: PLEASE DELETE THIS FOLLOWING COMMENT AFTER READING IT
+  // TO fdreadoutmodules DEVELOPERS: PLEASE DELETE THIS FOLLOWING COMMENT AFTER READING IT
   // For any run control command it is possible for a DAQModule to
   // register an action that will be executed upon reception of the
   // command. do_conf is a very common example of this; in
@@ -52,7 +52,7 @@ private:
 
   int m_some_configured_value { std::numeric_limits<int>::max() }; // Intentionally-ridiculous value pre-configuration
 
-  // TO ndreadoutmodules DEVELOPERS: PLEASE DELETE THIS FOLLOWING COMMENT AFTER READING IT 
+  // TO fdreadoutmodules DEVELOPERS: PLEASE DELETE THIS FOLLOWING COMMENT AFTER READING IT 
   // m_total_amount and m_amount_since_last_get_info_call are examples
   // of variables whose values get reported to OpMon
   // (https://github.com/mozilla/opmon) each time get_info() is

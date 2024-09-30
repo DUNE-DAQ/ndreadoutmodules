@@ -28,13 +28,13 @@ DummyModule::init(const data_t& /* structured args */)
 {}
 
 void
-DummyModule::get_info(opmonlib::InfoCollector& ci, int /* level */)
+DummyModule::generate_opmon_data()
 {
-  dummymoduleinfo::Info info;
+  opmon::DummyModuleInfo info;
   info.total_amount = m_total_amount;
-  info.amount_since_last_get_info_call = m_amount_since_last_get_info_call.exchange(0);
+  info.new_amount = m_amount_since_last_get_info_call.exchange(0);
 
-  ci.add(info);
+  publish(std::move(info));
 }
 
 void

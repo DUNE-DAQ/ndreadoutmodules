@@ -13,7 +13,7 @@
 #include "rcif/cmd/Nljs.hpp"
 
 #include "iomanager/IOManager.hpp"
-
+#include "datahandlinglibs/opmon/datahandling_info.pb.h"
 #include "datahandlinglibs/DataHandlingIssues.hpp"
 #include "datahandlinglibs/ReadoutLogging.hpp"
 #include "datahandlinglibs/concepts/DataHandlingConcept.hpp"
@@ -64,10 +64,9 @@ NDDataHandlerModule::init(std::shared_ptr<appfwk::ModuleConfiguration> cfg)
 }
 
 void
-NDDataHandlerModule::get_info(opmonlib::InfoCollector& ci, int level)
-{
-  inherited_dlh::get_info(ci, level);
-}
+NDDataHandlerModule::generate_opmon_data()
+ {
+ }
 
 std::unique_ptr<datahandlinglibs::DataHandlingConcept>
 NDDataHandlerModule::create_readout(const appmodel::DataHandlerModule* modconf, std::atomic<bool>& run_marker)
