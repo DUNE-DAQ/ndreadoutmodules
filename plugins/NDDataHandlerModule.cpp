@@ -7,6 +7,8 @@
  */
 #include "NDDataHandlerModule.hpp"
 
+#include "datahandlinglibs/opmon/datahandling_info.pb.h"
+
 #include "appfwk/app/Nljs.hpp"
 #include "appfwk/cmd/Nljs.hpp"
 #include "appfwk/cmd/Structs.hpp"
@@ -68,7 +70,7 @@ NDDataHandlerModule::generate_opmon_data()
  {
  }
 
-std::unique_ptr<datahandlinglibs::DataHandlingConcept>
+std::shared_ptr<dunedaq::datahandlinglibs::DataHandlingConcept>
 NDDataHandlerModule::create_readout(const appmodel::DataHandlerModule* modconf, std::atomic<bool>& run_marker)
 {
   namespace rol = dunedaq::datahandlinglibs;

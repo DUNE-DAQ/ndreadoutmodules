@@ -26,7 +26,6 @@ find_package(Boost COMPONENTS iostreams unit_test_framework REQUIRED)
 
 
 # See https://dune-daq-sw.readthedocs.io/en/latest/packages/daq-cmake/#daq_codegen
-daq_protobuf_codegen( opmon/*.proto )
 
 # daq_codegen(dummymodule.jsonnet TEMPLATES Structs.hpp.j2 Nljs.hpp.j2)
 # daq_codegen(dummymoduleinfo.jsonnet DEP_PKGS opmonlib TEMPLATES opmonlib/InfoStructs.hpp.j2 opmonlib/InfoNljs.hpp.j2)
@@ -36,7 +35,8 @@ daq_protobuf_codegen( opmon/*.proto )
 
 # See https://dune-daq-sw.readthedocs.io/en/latest/packages/daq-cmake/#daq_add_library
 
-daq_add_library( LINK_LIBRARIES ) # Any source files and/or dependent libraries to link in not yet determined
+daq_add_library( LINK_LIBRARIES opmonlib::opmonlib) # Any source files and/or dependent libraries to link in not yet determined
+daq_protobuf_codegen( opmon/*.proto )
 
 ##############################################################################
 
@@ -52,7 +52,7 @@ daq_add_library( LINK_LIBRARIES ) # Any source files and/or dependent libraries 
 
 # See https://dune-daq-sw.readthedocs.io/en/latest/packages/daq-cmake/#daq_add_plugin
 
-daq_add_plugin(NDDataHandlerModule duneDAQModule LINK_LIBRARIES appfwk::appfwk appmodel::appmodel datahandlinglibs::datahandlinglibs ndreadoutlibs::ndreadoutlibs Boost::iostreams) # Replace appfwk library with a more specific library when appropriate
+daq_add_plugin(NDDataHandlerModule duneDAQModule LINK_LIBRARIES appfwk::appfwk appmodel::appmodel appmodel::appmodel datahandlinglibs::datahandlinglibs ndreadoutlibs::ndreadoutlibs Boost::iostreams) # Replace appfwk library with a more specific library when appropriate
 
 ##############################################################################
 

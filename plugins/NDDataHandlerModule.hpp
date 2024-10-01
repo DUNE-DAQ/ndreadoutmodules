@@ -36,7 +36,7 @@ public:
 
   void init(std::shared_ptr<appfwk::ModuleConfiguration> cfg) override;
 
-  std::unique_ptr<datahandlinglibs::DataHandlingConcept>
+  std::shared_ptr<dunedaq::datahandlinglibs::DataHandlingConcept>
   create_readout(const appmodel::DataHandlerModule* modconf, std::atomic<bool>& run_marker) override;
 
 protected:
