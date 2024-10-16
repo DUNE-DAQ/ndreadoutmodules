@@ -16,7 +16,6 @@ daq_setup_environment()
 
 
 find_package(appfwk REQUIRED)
-find_package(appmodel REQUIRED)
 find_package(opmonlib REQUIRED)
 find_package(datahandlinglibs REQUIRED)
 find_package(ndreadoutlibs REQUIRED)
@@ -51,8 +50,8 @@ daq_protobuf_codegen( opmon/*.proto )
 
 
 # See https://dune-daq-sw.readthedocs.io/en/latest/packages/daq-cmake/#daq_add_plugin
-daq_add_plugin(NDDataHandlerModule duneDAQModule LINK_LIBRARIES appfwk::appfwk appmodel::appmodel appmodel::appmodel datahandlinglibs::datahandlinglibs ndreadoutlibs::ndreadoutlibs Boost::iostreams) # Replace appfwk library with a more specific library when appropriate
-daq_add_plugin(NDFakeReaderModule duneDAQModule LINK_LIBRARIES appfwk::appfwk appmodel::appmodel appmodel::appmodel datahandlinglibs::datahandlinglibs ndreadoutlibs::ndreadoutlibs Boost::iostreams)
+daq_add_plugin(NDDataHandlerModule duneDAQModule LINK_LIBRARIES appfwk::appfwk datahandlinglibs::datahandlinglibs ndreadoutlibs::ndreadoutlibs Boost::iostreams) # Replace appfwk library with a more specific library when appropriate
+daq_add_plugin(NDFakeReaderModule  duneDAQModule LINK_LIBRARIES appfwk::appfwk datahandlinglibs::datahandlinglibs ndreadoutlibs::ndreadoutlibs Boost::iostreams)
 ##############################################################################
 
 

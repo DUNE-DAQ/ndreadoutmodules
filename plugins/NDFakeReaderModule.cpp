@@ -115,7 +115,7 @@ NDFakeReaderModule::create_source_emulator(std::string q_id, std::atomic<bool>& 
 }
 
 
-
-
 } // ndreadoutmodules
 } // dunedaq
+
+DEFINE_DUNE_DAQ_MODULE(dunedaq::ndreadoutmodules::NDFakeReaderModule)
