@@ -14,6 +14,7 @@ namespace ndreadoutmodules{
 class NDFakeReaderModule : public dunedaq::appfwk::DAQModule,
                             public dunedaq::datahandlinglibs::FakeCardReaderBase
 {
+   public:
     using inherited_fcr = dunedaq::datahandlinglibs::FakeCardReaderBase;
     using inherited_mod = dunedaq::appfwk::DAQModule;
 
@@ -28,10 +29,6 @@ class NDFakeReaderModule : public dunedaq::appfwk::DAQModule,
 
     std::shared_ptr<datahandlinglibs::SourceEmulatorConcept>
     create_source_emulator(std::string qi, std::atomic<bool>& run_marker) override;
-
-
-
-
 
 };
 
