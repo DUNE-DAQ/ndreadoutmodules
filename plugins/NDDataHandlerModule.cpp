@@ -9,10 +9,10 @@
 
 #include "datahandlinglibs/opmon/datahandling_info.pb.h"
 
-#include "appfwk/app/Nljs.hpp"
-#include "appfwk/cmd/Nljs.hpp"
+// #include "appfwk/app/Nljs.hpp"
+// #include "appfwk/cmd/Nljs.hpp"
 #include "appfwk/cmd/Structs.hpp"
-#include "rcif/cmd/Nljs.hpp"
+// #include "rcif/cmd/Nljs.hpp"
 
 #include "iomanager/IOManager.hpp"
 #include "datahandlinglibs/opmon/datahandling_info.pb.h"

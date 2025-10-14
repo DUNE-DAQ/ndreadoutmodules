@@ -17,6 +17,7 @@ class NDFakeReaderModule : public dunedaq::appfwk::DAQModule,
    public:
     using inherited_fcr = dunedaq::datahandlinglibs::FakeCardReaderBase;
     using inherited_mod = dunedaq::appfwk::DAQModule;
+    
 
     explicit NDFakeReaderModule(const std::string& name);
 
