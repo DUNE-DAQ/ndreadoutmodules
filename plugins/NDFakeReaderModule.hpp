@@ -2,7 +2,7 @@
 #define NDREADOUTMODULES_PLUGINS_NDFAKECARDREADER_HPP_
 
 #include "appfwk/DAQModule.hpp"
-#include "appfwk/ModuleConfiguration.hpp"
+#include "appfwk/ConfigurationManager.hpp"
 
 #include "datahandlinglibs/FakeCardReaderBase.hpp"
 
@@ -26,7 +26,7 @@ class NDFakeReaderModule : public dunedaq::appfwk::DAQModule,
     NDFakeReaderModule(NDFakeReaderModule&&) = delete;                 ///< NDFakeReaderModule is not move-constructible
     NDFakeReaderModule& operator=(NDFakeReaderModule&&) = delete;      ///< NDFakeReaderModule is not move-assignable
 
-    void init(std::shared_ptr<appfwk::ModuleConfiguration> cfg) override;
+    void init(std::shared_ptr<appfwk::ConfigurationManager> cfg) override;
 
     std::shared_ptr<datahandlinglibs::SourceEmulatorConcept>
     create_source_emulator(std::string qi, std::atomic<bool>& run_marker) override;

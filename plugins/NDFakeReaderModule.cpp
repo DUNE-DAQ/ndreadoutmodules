@@ -47,7 +47,7 @@ NDFakeReaderModule::NDFakeReaderModule(const std::string& name)
 }
 
 void
-NDFakeReaderModule::init(std::shared_ptr<appfwk::ModuleConfiguration> cfg)
+NDFakeReaderModule::init(std::shared_ptr<appfwk::ConfigurationManager> cfg)
 {
   TLOG_DEBUG(TLVL_ENTER_EXIT_METHODS) << get_name() << ": Entering init() method";
   inherited_fcr::init(cfg);

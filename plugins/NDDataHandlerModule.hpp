@@ -34,7 +34,7 @@ public:
   NDDataHandlerModule(NDDataHandlerModule&&) = delete;                 ///< NDDataHandlerModule is not move-constructible
   NDDataHandlerModule& operator=(NDDataHandlerModule&&) = delete;      ///< NDDataHandlerModule is not move-assignable
 
-  void init(std::shared_ptr<appfwk::ModuleConfiguration> cfg) override;
+  void init(std::shared_ptr<appfwk::ConfigurationManager> cfg) override;
 
   std::shared_ptr<dunedaq::datahandlinglibs::DataHandlingConcept>
   create_readout(const appmodel::DataHandlerModule* modconf, std::atomic<bool>& run_marker) override;
