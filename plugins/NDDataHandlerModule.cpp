@@ -77,7 +77,6 @@ NDDataHandlerModule::create_readout(const appmodel::DataHandlerModule* modconf, 
   namespace ndt = dunedaq::ndreadoutlibs::types;
 
   // Acquire input connection and its DataType
-
   std::string raw_dt = modconf->get_module_configuration()->get_input_data_type();
   TLOG()<<"RAW DT :: "<<raw_dt;
   // IF ND LAr PACMAN
