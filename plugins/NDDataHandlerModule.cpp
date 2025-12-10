@@ -83,11 +83,14 @@ NDDataHandlerModule::create_readout(const appmodel::DataHandlerModule* modconf, 
   if (raw_dt.find("PACMANFrame") != std::string::npos) {
     TLOG_DEBUG(TLVL_WORK_STEPS) << "Creating readout for a pacman";
     auto readout_model =
-      std::make_unique<rol::DataHandlingModel<ndt::NDReadoutPACMANTypeAdapter,
+      std::make_shared<rol::DataHandlingModel<ndt::NDReadoutPACMANTypeAdapter,
                                          ndreadoutlibs::PACMANListRequestHandler,
                                          rol::SkipListLatencyBufferModel<ndt::NDReadoutPACMANTypeAdapter>,
                                          ndreadoutlibs::PACMANFrameProcessor>>(run_marker);
+
+    register_node("PACMANFrameProcessor", readout_model);
     readout_model->init(modconf);
+
     return readout_model;
   }
 
@@ -95,11 +98,13 @@ NDDataHandlerModule::create_readout(const appmodel::DataHandlerModule* modconf, 
   else if (raw_dt.find("MPDFrame") != std::string::npos) {
     TLOG_DEBUG(TLVL_WORK_STEPS) << "Creating readout for a mpd";
     auto readout_model =
-    std::make_unique<rol::DataHandlingModel<ndt::NDReadoutMPDTypeAdapter,
+    std::make_shared<rol::DataHandlingModel<ndt::NDReadoutMPDTypeAdapter,
                                        ndreadoutlibs::MPDListRequestHandler,
                                        rol::SkipListLatencyBufferModel<ndt::NDReadoutMPDTypeAdapter>,
                                        ndreadoutlibs::MPDFrameProcessor>>(run_marker);
     readout_model->init(modconf);
+    register_node("MPDFrameProcessor", readout_model);
+
     return readout_model;
   }
 
