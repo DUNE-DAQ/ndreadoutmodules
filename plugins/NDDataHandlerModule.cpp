@@ -78,7 +78,6 @@ NDDataHandlerModule::create_readout(const appmodel::DataHandlerModule* modconf, 
 
   // Acquire input connection and its DataType
   std::string raw_dt = modconf->get_module_configuration()->get_input_data_type();
-  TLOG()<<"RAW DT :: "<<raw_dt;
   // IF ND LAr PACMAN
   if (raw_dt.find("PACMANFrame") != std::string::npos) {
     TLOG_DEBUG(TLVL_WORK_STEPS) << "Creating readout for a pacman";
